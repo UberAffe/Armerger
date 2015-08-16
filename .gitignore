@@ -6,6 +6,12 @@ gradle/
 build.gradle
 gradlew
 gradlew.bat
+crash-reports/
+logs/
+options.txt
+saves/
+config/
+lib/
 
 # Ignore Gradle GUI config
 #gradle-app.setting
