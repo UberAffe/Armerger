@@ -4,7 +4,9 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -43,6 +45,29 @@ public class ArmorStand extends BlockContainer{
 	}
 	
 	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack)
+	{
+		int facing = getFacing((double)(placer.rotationYaw));// + 0.5D)) + 7) % 8;
+		world.setBlockMetadataWithNotify(x, y, z, facing, 2);
+	}
+	
+	private int getFacing(double yaw)
+	{
+		while(yaw < 0)
+			yaw += 360;
+		int angle = (int)yaw %360;
+		int facing = 0;
+		if(angle <= 135 || angle > 45)
+			facing += 1;
+		else if(angle <= 225 || angle > 135)
+			facing += 2;
+		else if(angle <= 315 || angle > 225)
+			facing += 3;
+		System.out.println(facing);
+		return facing;
+	}
+	
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
 	{
 		setBlockBounds(0f, 0f, 0.125f, 1f, 2f, 0.75f);//0.33f, 0.33f, 0.33f, 0.66f, 0.66f, 0.66f
@@ -71,6 +96,6 @@ public class ArmorStand extends BlockContainer{
 	//shows in hand
 	public void registerBlockIcons(IIconRegister ireg)
 	{
-		blockIcon = ireg.registerIcon(RefStrings.MODID + ":" + name + "icon");
+		blockIcon = ireg.registerIcon(RefStrings.MODID + ":" + name);
 	}
 }

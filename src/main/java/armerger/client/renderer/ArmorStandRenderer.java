@@ -18,7 +18,7 @@ public class ArmorStandRenderer extends TileEntitySpecialRenderer{
 	public ArmorStandRenderer(){}
 
 	@Override
-	public void renderTileEntityAt(TileEntity world, double x, double y, double z,
+	public void renderTileEntityAt(TileEntity ent, double x, double y, double z,
 			float p_147500_8_) {
 		//The PushMatrix tells the renderer to "start" doing something.
         GL11.glPushMatrix();
@@ -27,7 +27,7 @@ public class ArmorStandRenderer extends TileEntitySpecialRenderer{
         //This is the texture of your block. It's pathed to be the same place as your other blocks here.
         //Outdated bindTextureByName("/mods/roads/textures/blocks/TrafficLightPoleRed.png");
         //Use in 1.6.2  this
-        ResourceLocation textures = (new ResourceLocation(RefStrings.MODID + ":" + "armorstand.png"));
+        ResourceLocation textures = (new ResourceLocation(RefStrings.MODID + ":" + "textures/blocks/armorstand.png"));
         //the ':' is very important
         //binding the textures
         Minecraft.getMinecraft().renderEngine.bindTexture(textures);
@@ -35,12 +35,11 @@ public class ArmorStandRenderer extends TileEntitySpecialRenderer{
         //This rotation part is very important! Without it, your model will render upside-down! And for some reason you DO need PushMatrix again!                      
         GL11.glPushMatrix();
         GL11.glRotatef(180F, 0.0F, 0.0F, 1.0F);
+        GL11.glRotatef(ent.blockMetadata * (90f), 0.0F, 1.0F, 0.0F); //rotates stand to face placer.
         //A reference to your Model file. Again, very important.
         this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         //Tell it to stop rendering for both the PushMatrix's
         GL11.glPopMatrix();
         GL11.glPopMatrix();
 	}
-
-	
 }
