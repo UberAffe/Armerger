@@ -63,7 +63,7 @@ public class ArmorStandModel extends ModelBase{
       base.setTextureSize(64, 32);
       base.mirror = true;
       setRotation(base, 0F, 0F, 0F);
-    post = new ModelRenderer(this, "post");
+    post = new ModelRenderer(this, 40, 0);
     post.addBox(0F, 0F, 0F, 2, 14, 2);
     post.setRotationPoint(-1F, 8F, -1F);
     setRotation(post, 0F, 0F, 0F);

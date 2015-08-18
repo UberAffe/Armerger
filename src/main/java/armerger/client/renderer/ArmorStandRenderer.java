@@ -1,14 +1,18 @@
 package armerger.client.renderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import armerger.client.models.ArmorStandModel;
+import armerger.items.TEArmorStand;
 import armerger.lib.RefStrings;
 
 public class ArmorStandRenderer extends TileEntitySpecialRenderer{
@@ -40,6 +44,6 @@ public class ArmorStandRenderer extends TileEntitySpecialRenderer{
         this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         //Tell it to stop rendering for both the PushMatrix's
         GL11.glPopMatrix();
-        GL11.glPopMatrix();
+        GL11.glPopMatrix();        
 	}
 }
