@@ -6,16 +6,38 @@ import armerger.items.armor.LinkedBoots;
 import armerger.items.armor.LinkedChest;
 import armerger.items.armor.LinkedHelm;
 import armerger.items.armor.LinkedLegs;
+import armerger.client.ArmergerGUI;
 import armerger.items.ArmorStand;
 import armerger.lib.RefStrings;
+import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 
-public abstract class CommonProxy {
+public abstract class CommonProxy implements IGuiHandler{
 
+	public void preInit()
+	{
+		registerMaterials();
+		registerItems();
+		registerBlocks();
+		registerTileEntitys();
+	}
+	
+	public void init()
+	{
+		registerRecipes();
+	}
+	
+	public void postInit()
+	{
+		
+	}
+	
 	public void registerMaterials()
 	{
 		EnumHelper.addArmorMaterial(RefStrings.ARMORMATERIAL, 100, new int[]{0,0,0,0}, 0);
@@ -50,4 +72,17 @@ public abstract class CommonProxy {
 	}
 	
 	public abstract void registerRenderers();
+
+	@Override
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if( ID == ArmergerGUI.GUI_ID)
+			return new ArmergerGUI();
+		return null;
+	}
 }

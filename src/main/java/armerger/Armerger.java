@@ -11,7 +11,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import armerger.proxy.CommonProxy;
 import armerger.lib.RefStrings;
 
-@Mod(modid = RefStrings.MODID, name = RefStrings.NAME, version = RefStrings.VERSION, dependencies = RefStrings.REQUIRED, useMetadata = false)
+@Mod(modid = RefStrings.MODID, /*name = RefStrings.NAME,*/ version = RefStrings.VERSION/*, dependencies = RefStrings.REQUIRED, useMetadata = true*/)
 public class Armerger {
 
 	@Instance(RefStrings.MODID)
@@ -23,21 +23,22 @@ public class Armerger {
 	@EventHandler
     public void preInit (FMLPreInitializationEvent event){
         // preinit
-		proxy.registerRenderers();
-		proxy.registerBlocks();
-		proxy.registerTileEntitys();
-		proxy.registerMaterials();
-		proxy.registerItems();
+		//proxy.registerRenderers();
+		//proxy.registerBlocks();
+		//proxy.registerTileEntitys();
+		//proxy.registerMaterials();
+		//proxy.registerItems();
+		proxy.preInit();
 	}
 	
 	@EventHandler
     public void init (FMLInitializationEvent event){
         // init
-		proxy.registerRecipes();
+		proxy.init();
 	}
 	
 	@EventHandler
     public void postInit (FMLPostInitializationEvent event){
-        // postinit
+        proxy.postInit();
 	}
 }

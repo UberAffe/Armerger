@@ -1,0 +1,13 @@
+[
+{
+    "modid": "armerger",
+    "name": "Armerger",
+    "description": "Adds armor stands that are powered by rf to simulate wearing multiple armor sets.",
+    "version": "0.1",
+    "mcversion": "1.7.10",
+    "authorList": [ "UberAffe" ],
+    "credits": "Authored by UberAffe",
+    "requiredMods": [ "Forge", "Baubles" ],
+    "useDependencyInformation": true
+  }
+]

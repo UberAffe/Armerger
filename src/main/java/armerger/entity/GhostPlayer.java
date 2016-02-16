@@ -9,12 +9,10 @@ import net.minecraft.world.World;
 public class GhostPlayer extends EntityLiving{
 
 	private TEArmorStand containingStand;
-	private NBTTagCompound myData;
 	
 	public GhostPlayer(World world, TEArmorStand containingStand) {
 		super(world);
 		this.containingStand = containingStand;
-		myData = this.getEntityData();
 	}
 	
 	@Override
@@ -22,15 +20,10 @@ public class GhostPlayer extends EntityLiving{
     {
         super.onEntityUpdate();
         this.worldObj.theProfiler.startSection("mobBaseTick");
-
-        if (this.isEntityAlive())
-        {
         	if(containingStand.isParentStand())
         	{
         		containingStand.sendTickInfoToLinkedArmor();
         	}
-        }
-
         this.worldObj.theProfiler.endSection();
     }
 	
