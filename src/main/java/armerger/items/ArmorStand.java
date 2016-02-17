@@ -1,5 +1,6 @@
 package armerger.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,6 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import armerger.Armerger;
 import armerger.lib.RefStrings;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,7 +28,6 @@ public class ArmorStand extends BlockContainer{
 	
 	public ArmorStand() {
 		super(Material.rock);
-		// TODO Auto-generated constructor stub
 		setBlockName(RefStrings.MODID + "_" + name);
 		setBlockTextureName(RefStrings.MODID + ":" + name);
 		setCreativeTab(CreativeTabs.tabBlock);
@@ -51,7 +52,13 @@ public class ArmorStand extends BlockContainer{
 			TEArmorStand self = (TEArmorStand)tEnt;
 			ItemStack heldStack = player.getHeldItem();
 			if(heldStack == null || self.containsType(heldStack))
-				return self.onActivate(world, x, y, z, player);
+				if(self.onActivate(world, x, y, z, player))
+					return true;
+				else
+				{
+					player.openGui(Armerger.instance, RefStrings.ARMORSTANDGUIID, world, x, y, z);
+					return false;
+				}
 		}
 		return false;
 	}
@@ -127,6 +134,12 @@ public class ArmorStand extends BlockContainer{
 	{
 		return -1;//ArmorStandRenderer.renderID;
 	}
+	
+	@Override
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+    {
+		
+    }
 	
 	@SideOnly(Side.CLIENT)
 	@Override

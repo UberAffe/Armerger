@@ -16,4 +16,5 @@ public class RefStrings {
 	public static final String LINKEDSTANDS = "armerger_linkedStands_tag";
 	public static final String EQUIPPEDUUIDS = "armerger_equippeduuids";
 	public static final String RUNNING = "armerger_running";
+	public static final int ARMORSTANDGUIID = 6219587;
 }

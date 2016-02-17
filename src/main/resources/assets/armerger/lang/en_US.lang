@@ -1,0 +1,7 @@
+item.armerger_unlinkedingot.name=Unlinked ingot
+item.armerger_linkedhelm.name=Linked helm
+item.armerger_linkedchest.name=Linked chest
+item.armerger_linkedlegs.name=Linked pants
+item.armerger_linkedboots.name=Linked boots
+tile.armerger_armorstand.name=Linking Stand
+tile.armerger_unlinkedblock.name=Unlinked Block

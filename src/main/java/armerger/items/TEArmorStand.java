@@ -1,5 +1,4 @@
 package armerger.items;
-
 import armerger.entity.GhostPlayer;
 import armerger.items.armor.LinkedChest;
 import armerger.items.interfaces.ILinked;
@@ -17,6 +16,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -50,11 +52,6 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	public boolean becomeParent(){return true;}
 	public boolean containsType(ItemStack type){return (type.getItem() instanceof ItemArmor || type.getItem() instanceof IBauble);}		
 
-	private void openGUI() 
-	{
-		this.openInventory();
-	}
-	
 	public void onBlockPlaced(World world, int x, int y, int z)
 	{
 		placeGhost();
@@ -67,7 +64,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	}
 	
 	//------------------------
-	// Load and Save Methods
+	// Save and Server Sync methods
 	//------------------------
 
 	@Override
@@ -147,6 +144,20 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 		nbt.setTag(RefStrings.LINKEDSTANDS, stands);
 	}
 	
+	@Override
+	public Packet getDescriptionPacket()
+    {
+		NBTTagCompound info = new NBTTagCompound();
+		this.writeToNBT(info);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, info);
+    }
+	
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+		this.readFromNBT(pkt.func_148857_g());
+    }
+	
 	//--------------------------
 	// Custom Methods
 	//--------------------------
@@ -195,7 +206,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	public boolean onActivate(World world, int x, int y, int z, EntityPlayer player)
 	{
 		boolean toReturn = tryPlacingArmor(world,x,y,z,player);
-		if((!this.isparent || !this.ischild) && this.isReadyToLink())
+		if((!this.isparent && !this.ischild) && this.isReadyToLink())
 			createLinkedStandArmor();
 		return toReturn;
 	}
@@ -237,11 +248,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	private boolean tryPlacingArmor(World world, int x, int y, int z, EntityPlayer player)
 	{
 		ItemStack heldStack = player.getHeldItem();
-		if(heldStack == null)
-		{
-			openGUI();
-		}
-		else if(heldStack.getItem() instanceof ItemArmor)
+		if(heldStack != null && heldStack.getItem() instanceof ItemArmor)
 		{
 			Item held = heldStack.getItem();
 			if(((ItemArmor)held).armorType == 0)
@@ -385,7 +392,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	@Override
 	public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) 
 	{
-		return storage.extractEnergy(maxExtract, simulate);
+		return storage.extractEnergy(0, false);
 	}
 
 	/* IEnergyReceiver and IEnergyProvider */
@@ -424,21 +431,20 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	public ItemStack decrStackSize(int index, int count) {
 		if (this.getStackInSlot(index) != null) 
 		{
-	        ItemStack itemstack;
-	        if (this.getStackInSlot(index).stackSize <= count) {
-	            itemstack = this.getStackInSlot(index);
+	        ItemStack itemstack = this.getStackInSlot(index);
+	        if (itemstack.stackSize <= count) {
 	            this.setInventorySlotContents(index, null);
 	            this.markDirty();
 	            return itemstack;
 	        } 
 	        else 
 	        {
-	            itemstack = this.getStackInSlot(index).splitStack(count);
-	            if (this.getStackInSlot(index).stackSize <= 0) {
+	            itemstack = itemstack.splitStack(count);
+	            if (itemstack.stackSize <= 0) {
 	                this.setInventorySlotContents(index, null);
 	            } else {
 	                //Just to show that changes happened
-	                this.setInventorySlotContents(index, this.getStackInSlot(index));
+	                this.setInventorySlotContents(index, itemstack);
 	            }
 	            this.markDirty();
 	            return itemstack;
@@ -472,13 +478,13 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	@Override
 	public String getInventoryName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "armerger.tileentityarmorstand";
 	}
 
 	@Override
 	public boolean hasCustomInventoryName() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

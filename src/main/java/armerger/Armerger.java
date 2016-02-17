@@ -22,12 +22,6 @@ public class Armerger {
 	
 	@EventHandler
     public void preInit (FMLPreInitializationEvent event){
-        // preinit
-		//proxy.registerRenderers();
-		//proxy.registerBlocks();
-		//proxy.registerTileEntitys();
-		//proxy.registerMaterials();
-		//proxy.registerItems();
 		proxy.preInit();
 	}
 	
