@@ -3,7 +3,6 @@
 bin/
 build/
 gradle/
-build.gradle
 gradlew
 gradlew.bat
 crash-reports/
@@ -11,6 +10,8 @@ logs/
 options.txt
 saves/
 config/
+mods/
+asm/
 
 # Ignore Gradle GUI config
 #gradle-app.setting
