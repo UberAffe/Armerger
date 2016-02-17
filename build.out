@@ -17,7 +17,7 @@ Tasks to be executed: [task ':compileApiJava', task ':processApiResources', task
 :compileApiJava
 Skipping task ':compileApiJava' as it has no source files.
 :compileApiJava UP-TO-DATE
-:compileApiJava (Thread[main,5,main]) completed. Took 0.009 secs.
+:compileApiJava (Thread[main,5,main]) completed. Took 0.01 secs.
 :processApiResources (Thread[main,5,main]) started.
 :processApiResources
 Skipping task ':processApiResources' as it has no source files.
@@ -30,25 +30,23 @@ Skipping task ':apiClasses' as it has no actions.
 :apiClasses (Thread[main,5,main]) completed. Took 0.0 secs.
 :sourceMainJava (Thread[main,5,main]) started.
 :sourceMainJava
-Skipping task ':sourceMainJava' as it is up-to-date (took 0.025 secs).
+Skipping task ':sourceMainJava' as it is up-to-date (took 0.023 secs).
 :sourceMainJava UP-TO-DATE
-:sourceMainJava (Thread[main,5,main]) completed. Took 0.026 secs.
+:sourceMainJava (Thread[main,5,main]) completed. Took 0.024 secs.
 :compileJava (Thread[main,5,main]) started.
 :compileJava
 Failed to get resource: GET. [HTTP HTTP/1.1 403 Forbidden: https://libraries.minecraft.net//forgeSrc/1.7.10-10.13.4.1481-1.7.10/forgeSrc-1.7.10-10.13.4.1481-1.7.10.pom]
 Failed to get resource: GET. [HTTP HTTP/1.1 403 Forbidden: https://libraries.minecraft.net/org/scala-lang/scala-parser-combinators_2.11/1.0.1/scala-parser-combinators_2.11-1.0.1.pom]
 Failed to get resource: GET. [HTTP HTTP/1.1 403 Forbidden: https://libraries.minecraft.net/org/scala-lang/scala-swing_2.11/1.0.1/scala-swing_2.11-1.0.1.pom]
 Failed to get resource: GET. [HTTP HTTP/1.1 403 Forbidden: https://libraries.minecraft.net/org/scala-lang/scala-xml_2.11/1.0.2/scala-xml_2.11-1.0.2.pom]
-file or directory 'F:\Minecraft Mods\Armerger\libs', not found
-Executing task ':compileJava' (up-to-date check took 2.241 secs) due to:
+Executing task ':compileJava' (up-to-date check took 0.927 secs) due to:
   No history is available.
 All input files are considered out-of-date for incremental task ':compileJava'.
-file or directory 'F:\Minecraft Mods\Armerger\libs', not found
 Compiling with JDK Java compiler API.
 :compileJava FAILED
-:compileJava (Thread[main,5,main]) completed. Took 2.26 secs.
+:compileJava (Thread[main,5,main]) completed. Took 1.028 secs.
 
 BUILD FAILED
 
-Total time: 5.544 secs
+Total time: 4.024 secs
 Stopped 0 compiler daemon(s).

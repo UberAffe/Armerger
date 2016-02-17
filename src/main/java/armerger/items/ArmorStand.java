@@ -56,7 +56,7 @@ public class ArmorStand extends BlockContainer{
 					return true;
 				else
 				{
-					player.openGui(Armerger.instance, RefStrings.ARMORSTANDGUIID, world, x, y, z);
+					player.openGui(Armerger.instance, 0, world, x, y, z);
 					return false;
 				}
 		}
@@ -126,7 +126,7 @@ public class ArmorStand extends BlockContainer{
 	@Override
 	public boolean renderAsNormalBlock()
 	{
-		return false;
+		return true;
 	}
 	
 	@Override

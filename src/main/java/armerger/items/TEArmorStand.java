@@ -32,7 +32,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	private ItemStack[] linkedArmor;
 	private EntityPlayer[] equippedBy;
 	private ItemStack[] inventory;
-	private EntityLiving ghost;
+	public EntityLiving ghost;
 	private boolean ischild = false;
 	private boolean isparent = false;
 	
