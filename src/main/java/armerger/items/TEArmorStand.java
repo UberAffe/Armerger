@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -78,18 +79,19 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 		this.blockMetadata = nbt.getInteger(RefStrings.METADATATAG);
 		World world = MinecraftServer.getServer().getEntityWorld();
 		int[] uuids = nbt.getIntArray(RefStrings.EQUIPPEDUUIDS);
-		NBTTagCompound held = nbt.getCompoundTag(RefStrings.HELDARMOR);
-		NBTTagCompound linked = nbt.getCompoundTag(RefStrings.LINKEDARMOR);
-		NBTTagCompound stands = nbt.getCompoundTag(RefStrings.LINKEDSTANDS);
-		for(int i = 0; i < 8; i++)
+		NBTTagList list= nbt.getTagList(RefStrings.TAGLIST, 9);
+		NBTTagList inv = list.getCompoundTagAt(0).getTagList(RefStrings.HELDARMOR, 9);
+		NBTTagList linked = list.getCompoundTagAt(1).getTagList(RefStrings.LINKEDARMOR, 9);
+		NBTTagCompound stands = list.getCompoundTagAt(2);
+		for(int i = 0; i < nbt.getInteger(RefStrings.TAGLIST); i++)
 		{
 			//entities
 			Entity ent = (uuids[i] != -1) ? world.getEntityByID(uuids[i]) : null;
 			equippedBy[i] = (ent instanceof EntityPlayer) ? ((EntityPlayer)ent) : null;
 			//heldArmor
-			inventory[i] = (held.hasKey(RefStrings.HELDARMOR + i)) ? ItemStack.loadItemStackFromNBT(held.getCompoundTag(RefStrings.HELDARMOR + i)) : null;
+			inventory[i] = (inv.getCompoundTagAt(i).hasKey(RefStrings.HELDARMOR + i)) ? ItemStack.loadItemStackFromNBT(inv.getCompoundTagAt(i).getCompoundTag(RefStrings.HELDARMOR + i)) : null;
 			//linkedArmor
-			linkedArmor[i] = (linked.hasKey(RefStrings.LINKEDARMOR + i)) ? ItemStack.loadItemStackFromNBT(held.getCompoundTag(RefStrings.LINKEDARMOR + i)) : null;
+			linkedArmor[i] = (linked.getCompoundTagAt(i).hasKey(RefStrings.LINKEDARMOR + i)) ? ItemStack.loadItemStackFromNBT(linked.getCompoundTagAt(i).getCompoundTag(RefStrings.LINKEDARMOR + i)) : null;
 		}
 		for(int i = 0; i < 10; i++)
 		{
@@ -112,9 +114,11 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 		nbt.setInteger(RefStrings.GHOSTTAG, ghost.getEntityId());
 		nbt.setInteger(RefStrings.METADATATAG, this.blockMetadata);
 		int[] uuids = new int[8];
-		NBTTagCompound held = new NBTTagCompound();
-		NBTTagCompound linked = new NBTTagCompound();
+		NBTTagList list = new NBTTagList();
+		NBTTagList inv = new NBTTagList();
+		NBTTagList linked = new NBTTagList();
 		NBTTagCompound nbttagcompound1;
+		int count = 1;
 		for(int i = 0; i < 8; i++)
 		{
 			//entities
@@ -124,26 +128,35 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 			{
 				nbttagcompound1 = new NBTTagCompound();
                 inventory[i].writeToNBT(nbttagcompound1);
-                held.setTag(RefStrings.HELDARMOR + i, nbttagcompound1);
+                nbttagcompound1.setString(RefStrings.HELDARMOR + i, "");
+                inv.appendTag(nbttagcompound1);
+                count++;
 			}
 			//linkedArmor
 			if(linkedArmor[i] != null)
 			{
 				nbttagcompound1 = new NBTTagCompound();
                 inventory[i].writeToNBT(nbttagcompound1);
-                linked.setTag(RefStrings.LINKEDARMOR + i, nbttagcompound1);
+                nbttagcompound1.setString(RefStrings.LINKEDARMOR + i, "");
+                linked.appendTag(nbttagcompound1);
+                count++;
 			}
 		}
+		nbttagcompound1 = new NBTTagCompound();
+		nbttagcompound1.setTag(RefStrings.HELDARMOR, inv);/*Encapsulate inv and append*/
+		list.appendTag(nbttagcompound1);
+		nbttagcompound1 = new NBTTagCompound();
+		nbttagcompound1.setTag(RefStrings.HELDARMOR, linked);/*Encapsulate linked and append*/
+		list.appendTag(nbttagcompound1);
 		nbt.setIntArray(RefStrings.EQUIPPEDUUIDS, uuids);
-		nbt.setTag(RefStrings.HELDARMOR, held);
-		nbt.setTag(RefStrings.LINKEDARMOR, linked);
-		NBTTagCompound stands = new NBTTagCompound();
+		nbttagcompound1 = new NBTTagCompound();
+		nbttagcompound1.setString(RefStrings.LINKEDSTANDS, "");
 		for(int i = 0; i < 10; i++)
-		{
 			if(linkedStands[i] != null)
-				stands.setIntArray(RefStrings.LINKEDSTANDS + 1, new int[]{linkedStands[i].xCoord, linkedStands[i].yCoord,linkedStands[i].zCoord});
-		}
-		nbt.setTag(RefStrings.LINKEDSTANDS, stands);
+				nbttagcompound1.setIntArray(RefStrings.LINKEDSTANDS + 1, new int[]{linkedStands[i].xCoord, linkedStands[i].yCoord,linkedStands[i].zCoord});
+		list.appendTag(nbttagcompound1);
+		nbt.setTag(RefStrings.TAGLIST, list);
+		nbt.setInteger(RefStrings.TAGLIST, count);
 	}
 	
 	@Override
