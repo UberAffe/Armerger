@@ -60,7 +60,9 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	//ghost is only used for rendering
 	private void placeGhost() 
 	{
-		// TODO Auto-generated method stub
+		ghost.posX = this.xCoord;
+		ghost.posY = this.yCoord;
+		ghost.posZ = this.zCoord;
 	}
 	
 	//------------------------

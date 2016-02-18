@@ -52,13 +52,16 @@ public class ArmorStand extends BlockContainer{
 			TEArmorStand self = (TEArmorStand)tEnt;
 			ItemStack heldStack = player.getHeldItem();
 			if(heldStack == null || self.containsType(heldStack))
+			{
 				if(self.onActivate(world, x, y, z, player))
-					return true;
+					return false;
 				else
 				{
-					player.openGui(Armerger.instance, 0, world, x, y, z);
-					return false;
+					if(!world.isRemote)
+						player.openGui(Armerger.instance, 0, world, x, y, z);
+					return true;
 				}
+			}
 		}
 		return false;
 	}

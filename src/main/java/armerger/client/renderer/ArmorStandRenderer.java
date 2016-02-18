@@ -40,13 +40,13 @@ public class ArmorStandRenderer extends TileEntitySpecialRenderer{
         GL11.glRotatef(ent.blockMetadata * (90f), 0.0F, 1.0F, 0.0F); //rotates stand to face placer.
         //A reference to your Model file. Again, very important.
         this.model.render((Entity)null, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
-        TEArmorStand teAS = (TEArmorStand) ent;
+        /*TEArmorStand teAS = (TEArmorStand) ent;
         for(int i = 0; i < 4; i++)
         {
         	ItemStack item = teAS.getStackInSlot(i);
         	if(item != null)
         		item.getItem().getArmorModel(entityLiving, item, i);
-        }
+        }*/
         //Tell it to stop rendering for both the PushMatrix's
         GL11.glPopMatrix();
         GL11.glPopMatrix();        

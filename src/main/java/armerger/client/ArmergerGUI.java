@@ -15,6 +15,10 @@ public class ArmergerGUI extends GuiContainer{
 	public ArmergerGUI(InventoryPlayer pInv, TEArmorStand armorStand)
 	{
 		super(new ContainerArmorStand(pInv, armorStand));
+		/*width = 16;
+		height = 16;
+		xSize = 176;
+		ySize = 166;*/
 	}
 	
 	@Override
