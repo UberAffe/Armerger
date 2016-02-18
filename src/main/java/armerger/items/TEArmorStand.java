@@ -167,24 +167,42 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	/*
 	 * Only for use by Parent Stands, should only be called by a single linked armor piece
 	 */
-	public void sendTickInfoToLinkedArmor(NBTTagCompound tickInfo)
+	public void sendTickInfoToLinkedArmor()
 	{
-		getTickInfoFromChildren(tickInfo);
-		((LinkedArmor)linkedArmor[2].getItem()).acceptInfo(tickInfo); // send to chest
+		NBTTagCompound[][] info = getTickInfoFromChildren();
+		NBTTagCompound[] temp = this.getTickInfo();
+		for(int i = 0; i < 8; i++)
+			info[i][0] = temp[i];
+		for(int i = 0; i < 8; i++)
+		{
+			((LinkedArmor)linkedArmor[i].getItem()).acceptInfo(info[i], linkedArmor[i]);
+		}
 	}
 	
-	private void getTickInfoFromChildren(NBTTagCompound tickInfo) 
+	private NBTTagCompound[][] getTickInfoFromChildren() 
 	{
+		NBTTagCompound[][] info = new NBTTagCompound[8][11];
 		for(int i = 0; i < 10; i++)
-				linkedStands[i].getTickInfo(tickInfo, i);
+		{
+			NBTTagCompound[] temp = linkedStands[i].getTickInfo();
+			for(int j = 0; j < 8; j++)
+				info[j][i + 1] = temp[j];
+		}
+		return info;
 	}
 	
-	public void getTickInfo(NBTTagCompound tickInfo, int cNum)
+	public NBTTagCompound[] getTickInfo()
 	{
-		NBTTagCompound info = new NBTTagCompound();
-		for(int i = 0; i < 4; i++)
-			info.setTag(RefStrings.HELDARMOR + i, ghost.getEquipmentInSlot(4).getTagCompound());
-		tickInfo.setTag(RefStrings.LINKEDSTANDS + cNum, info);
+		NBTTagCompound[] info = new NBTTagCompound[8];
+		info[0] = ghost.getEquipmentInSlot(4).getTagCompound();
+		info[0].setString(RefStrings.ITEMNAMETAG, ghost.getEquipmentInSlot(4).toString());
+		info[1] = ghost.getEquipmentInSlot(3).getTagCompound();
+		info[1].setString(RefStrings.ITEMNAMETAG, ghost.getEquipmentInSlot(3).toString());
+		info[2] = ghost.getEquipmentInSlot(2).getTagCompound();
+		info[2].setString(RefStrings.ITEMNAMETAG, ghost.getEquipmentInSlot(2).toString());
+		info[3] = ghost.getEquipmentInSlot(1).getTagCompound();
+		info[3].setString(RefStrings.ITEMNAMETAG, ghost.getEquipmentInSlot(1).toString());
+		return info;
 	}
 
 	public boolean onActivate(World world, int x, int y, int z, EntityPlayer player)
@@ -210,6 +228,7 @@ public class TEArmorStand extends TileEntity  implements IEnergyHandler, IInvent
 	}
 
 	private boolean isReadyToLink() {
+		//for(ItemStack held : heldArmor)
 		for(int i = 0; i < 4; i++)// this for loop is until I have bauble implemented
 		{
 			ItemStack held = inventory[i];

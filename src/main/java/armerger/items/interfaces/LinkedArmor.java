@@ -32,12 +32,6 @@ public abstract class LinkedArmor extends ItemArmor implements ILinked{
 	}
 	
 	@Override
-	public void acceptInfo(NBTTagCompound info)
-	{
-		System.out.println("Well this is akwarkd");
-	}
-	
-	@Override
 	public NBTTagCompound sendOnTickEffects()
 	{
 		return null;

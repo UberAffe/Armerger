@@ -11,20 +11,39 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-public abstract class LinkedBauble extends Item implements IBauble{
+public abstract class LinkedBauble extends Item implements ILinked, IBauble{
 	private TEArmorStand parentStand;
 	
 	public LinkedBauble()
 	{
 		super();
 	}
+	
+	@Override
+	public boolean isLinked(){return parentStand != null;}
+	@Override
+	public void removeLink() {parentStand = null;}
+	
 	public boolean createLink(TEArmorStand parentStand)
 	{
 		if(this.parentStand != null)
 			return false;
 		this.parentStand = parentStand;
 		return true;
+	}
+	
+	@Override
+	public void acceptInfo(NBTTagCompound[] info, ItemStack itemStack) {
+		System.out.println("baubles accept your offering");
+		
+	}
+	
+	@Override
+	public void doLivingHurtEvent(LivingHurtEvent event) {
+		System.out.println("Doing bauble things");
+		
 	}
 	
 	public void readFromNBT(NBTTagCompound nbt) 
@@ -66,6 +85,12 @@ public abstract class LinkedBauble extends Item implements IBauble{
 	public void onWornTick(ItemStack arg0, EntityLivingBase arg1) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public NBTTagCompound sendOnTickEffects() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override

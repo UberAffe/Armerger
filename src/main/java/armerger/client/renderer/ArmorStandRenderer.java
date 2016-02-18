@@ -1,14 +1,19 @@
 package armerger.client.renderer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import armerger.client.models.ArmorStandModel;
+import armerger.items.TEArmorStand;
 import armerger.lib.RefStrings;
 
 public class ArmorStandRenderer extends TileEntitySpecialRenderer{

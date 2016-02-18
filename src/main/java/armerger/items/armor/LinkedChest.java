@@ -2,7 +2,6 @@ package armerger.items.armor;
 
 import armerger.items.interfaces.LinkedArmor;
 import armerger.lib.RefStrings;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,9 +20,11 @@ public class LinkedChest extends LinkedArmor{
 	}
 
 	@Override
-	public void acceptInfo(NBTTagCompound info)
+	public void acceptInfo(NBTTagCompound[] info, ItemStack itemStack)
 	{
 		System.out.println("Chest got passive stats");
+		if(itemStack.getTagCompound().getBoolean(RefStrings.RUNNING))
+			System.out.println("chest used passive stats");
 	}
 	
 	@Override
@@ -33,6 +34,8 @@ public class LinkedChest extends LinkedArmor{
 		if(this.parentStand != null && itemStack.getTagCompound().getBoolean(RefStrings.RUNNING))
 		{
 			System.out.println("chest running on tick");
+			parentStand.sendTickInfoToLinkedArmor();
+			
 		}
 			
 	}
@@ -48,11 +51,5 @@ public class LinkedChest extends LinkedArmor{
 	public NBTTagCompound sendOnTickEffects() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void setGhost(EntityLiving ghost) {
-		// TODO Auto-generated method stub
-		
 	}
 }
