@@ -2,8 +2,7 @@ package armerger.items.armor;
 
 import armerger.items.interfaces.LinkedArmor;
 import armerger.lib.RefStrings;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.EntityLiving;
 
 public class LinkedBoots extends LinkedArmor{
 
@@ -15,10 +14,10 @@ public class LinkedBoots extends LinkedArmor{
 		setUnlocalizedName(RefStrings.MODID + "_" + name);
 		setTextureName(RefStrings.MODID + ":" + name);
 	}
-	
+
 	@Override
-	public void acceptInfo(NBTTagCompound[] info, ItemStack itemStack)
-	{
-		System.out.println("Boots got info");
+	public void setGhost(EntityLiving ghost) {
+		// TODO Auto-generated method stub
+		
 	}
 }

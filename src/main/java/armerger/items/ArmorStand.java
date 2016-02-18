@@ -51,7 +51,11 @@ public class ArmorStand extends BlockContainer{
 		{
 			TEArmorStand self = (TEArmorStand)tEnt;
 			ItemStack heldStack = player.getHeldItem();
-			if(heldStack == null || self.containsType(heldStack))
+			if(heldStack == null && player.isSneaking())
+			{
+				;//drop Stand with inventory
+			}
+			else if(heldStack == null || self.containsType(heldStack))
 			{
 				if(self.onActivate(world, x, y, z, player))
 					return false;

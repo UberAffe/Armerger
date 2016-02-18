@@ -15,18 +15,27 @@ public class GhostPlayer extends EntityLiving{
 		this.containingStand = containingStand;
 	}
 	
+	public ItemStack getItemInSlot(int index)
+	{
+		return containingStand.getStackInSlot(index);
+	}
+	
 	@Override
 	public void onEntityUpdate()
     {
         super.onEntityUpdate();
         this.worldObj.theProfiler.startSection("mobBaseTick");
-        	if(containingStand.isParentStand())
-        	{
-        		containingStand.sendTickInfoToLinkedArmor();
-        	}
+        	if(containingStand.isParentStand())        		
+        		containingStand.sendTickInfoToLinkedArmor(getEffects());
         this.worldObj.theProfiler.endSection();
     }
 	
+	//Store any passive effects and the number of effects
+	private NBTTagCompound getEffects() {
+		
+		return null;
+	}
+
 	@Override
 	public boolean getCanSpawnHere()
 	{

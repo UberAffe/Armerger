@@ -2,8 +2,7 @@ package armerger.items.armor;
 
 import armerger.items.interfaces.LinkedArmor;
 import armerger.lib.RefStrings;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.EntityLiving;
 
 public class LinkedHelm extends LinkedArmor{
 
@@ -17,9 +16,8 @@ public class LinkedHelm extends LinkedArmor{
 	}
 
 	@Override
-	public void acceptInfo(NBTTagCompound[] info, ItemStack itemStack)
-	{
-		System.out.println("Helm got info");
-		System.out.println("linked helms:");
+	public void setGhost(EntityLiving ghost) {
+		// TODO Auto-generated method stub
+		
 	}
 }
